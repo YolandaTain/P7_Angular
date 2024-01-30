@@ -1,0 +1,56 @@
+<div class="card border-primary mb-3">
+    <div class="card-header">Products</div>
+    <div class="card-body text-primary">
+        <h5 class="card-title text-align:center">Welcome to {{ title }}</h5>
+        <table class="table table-bordered table-striped" *ngIf="products.length > 0; else noProducts">
+
+            <thead>
+                <tr class=text-center>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th colspan="2">Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products" class=text-center>
+                    <td>{{product.code}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.price}}€</td>
+                    <td><button type="button" (click)="deleteProduct(product)" class="btn btn-danger my-3">Delete</button></td>
+                    <td><button type="button" (click)="selectProduct(product)"class="btn btn-primary my-3">Select</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #noProducts>No hay productos disponibles</ng-template>
+    </div>
+</div>
+<div class="card border-primary mb-2">
+    <div class="card-header">Products</div>
+    <div class="card-body text-primary">
+        <form>
+            <div class="mb-3">
+                <label for="code" class="form-label">Code</label>
+                <input name="code" type="text" [(ngModel)]="product.code" class="form-control" id="codeInput" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input name="description" type="text" [(ngModel)]="product.description" class="form-control" id="descriptionInput" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input name="quantity" type="text" [(ngModel)]="product.quantity" class="form-control" id="quantityInput" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input name="price" type="text" [(ngModel)]="product.price" class="form-control" id="priceInput" aria-describedby="emailHelp">
+            </div>
+            <div class="row d-flex justify-content-around">
+                <button type="submit" (click)="addProduct()" class="btn btn-success py-3 col-2">Add</button>
+                <button type="submit" (click)="modifyProduct()" class="btn btn-warning py-3 col-2">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>
