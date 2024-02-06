@@ -1,0 +1,202 @@
+<h5 class="card-title row d-flex justify-content-center my-3">New Task</h5>
+<div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-5 col-lg-4 card border-success mb-3" style="max-width: 30rem;">
+
+        <form>
+            <div class="card-header bg-dark text-white py-3"><span class="centerTask">
+                    <label for="newTaskName">Name:</label>
+                    <input id="newTaskName" name="newTaskName" [(ngModel)]="emptyTaskValues.name" required></span></div>
+
+            <div class="card-body text-success row"><strong>
+
+                    <label for="newTaskDescription" class="col-4">Description:</label>
+                    <textarea id="newTaskDescription" class="col-8" name="newTaskDescription"
+                        [(ngModel)]="emptyTaskValues.description" required></textarea>
+
+                    <label for="newTaskStartDate" class="col-4">Start Date:</label>
+                    <input type="date" id="newTaskStartDate" class="col-8" name="newTaskStartDate"
+                        [(ngModel)]="emptyTaskValues.startDate">
+
+                    <label for="newTaskEndDate" class="col-4">End Date:</label>
+                    <input type="date" id="newTaskEndDate" class="col-8" name="newTaskEndDate"
+                        [(ngModel)]="emptyTaskValues.endDate">
+
+                    <label for="newTaskSubject" class="col-4">Subject:</label>
+                    <input id="newTaskSubject" class="col-8" name="newTaskSubject" [(ngModel)]="emptyTaskValues.subject"
+                        required>
+
+                    <label for="newTaskAssignedTo" class="col-4">Assigned to:</label>
+                    <input id="newTaskAssignedTo" class="col-8" name="newTaskAssignedTo"
+                        [(ngModel)]="emptyTaskValues.assignedTo" required>
+
+                    <label for="newTaskTimeEstimation" class="col-4">Time Estimation:</label>
+                    <input type="number" id="newTaskTimeEstimation" class="col-8" name="newTaskTimeEstimation"
+                        [(ngModel)]="emptyTaskValues.timeEstimation" required>
+
+                    <label for="newTaskDuration" class="col-4">Duration:</label>
+                    <input id="newTaskDuration" class="col-8" name="newTaskDuration"
+                        [(ngModel)]="emptyTaskValues.duration">
+                </strong></div>
+        </form>
+        <div class="row justify-content-center">
+            <button type="button" (click)="createTask(emptyTaskValues)" data-bs-toggle="modal"
+                data-bs-target="#createModal"
+                class="btn col-5 col-md-5 col-lg-5 d-flex justify-content-center btn-success my-3">Create
+                Task</button>
+        </div>
+    </div>
+</div>
+
+<h5 class="card-title row d-flex justify-content-center my-3">Welcome to {{ title }}</h5>
+<div class="row justify-content-around" *ngIf="tasks.length > 0; else noTasks">
+    <div *ngFor="let task of tasks" class="col-12 col-md-5 col-lg-4 tarjeta card border-success mb-3"
+        (click)="selectTask(task)" style="max-width: 30rem;">
+        <div class="card-header bg-dark text-white py-3"><span class="centerTask">{{ task.name }}</span></div>
+        <div class="card-header bg-light" *ngIf="task.isSelected==true">
+            <div class="row justify-content-between">
+                <button type="button" (click)="startTask(task)" class="btn col-2 col-md-2 col-lg-2 btn-primary"
+                    data-bs-toggle="modal" data-bs-target="#initialModal">&#10148;</button>
+                <button type="button" (click)="finishTask(task)"
+                    class="btn col-2 col-md-2 col-lg-2 btn-success">&#9989;</button>
+                <button type="button" (click)="editTask(task)" class="btn col-2 col-md-2 col-lg-2 btn-warning"
+                    data-bs-toggle="modal" data-bs-target="#editModal">&#9998;</button>
+                <button type="button" (click)="deleteTask(task)"
+                    class="btn col-2 col-md-2 col-lg-2 btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal">&#10008;</button>
+            </div>
+        </div>
+        <div class="card-body text-success">
+            <h5 class="card-title"><span class="centerTask">{{ task.subject }}</span></h5>
+            <p class="card-text"><span>Description:</span> {{ task.description }}</p>
+            <p class="card-text"><span>Start Date:</span> {{ task.startDate}}</p>
+            <p class="card-text"><span>End Date:</span> {{ task.endDate}}</p>
+            <p class="card-text"><span>Assigned To:</span> {{ task.assignedTo }}</p>
+            <p class="card-text"><span>Estimation:</span> {{ task.timeEstimation }} hours</p>
+            <p class="card-text"><span>Duration:</span> {{ task.duration || 'Not specified' }}</p>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Mode</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del formulario -->
+                <form>
+                    <div class="card-header bg-dark text-white py-3"><span class="centerTask">
+                            <label for="newTaskName">Name:</label>
+                            <input id="newTaskName" name="newTaskName" [(ngModel)]="emptyTaskValues.name" required>
+                        </span></div>
+
+                    <div class="card-body text-success row"><strong>
+                            <label for="newTaskDescription" class="col-4">Description:</label>
+                            <textarea id="newTaskDescription" class="col-8" name="newTaskDescription"
+                                [(ngModel)]="emptyTaskValues.description" required></textarea>
+
+                            <label for="newTaskStartDate" class="col-4">Start Date:</label>
+                            <input type="date" id="newTaskStartDate" class="col-8" name="newTaskStartDate"
+                                [(ngModel)]="emptyTaskValues.startDate">
+
+                            <label for="newTaskEndDate" class="col-4">End Date:</label>
+                            <input type="date" id="newTaskEndDate" class="col-8" name="newTaskEndDate"
+                                [(ngModel)]="emptyTaskValues.endDate">
+
+                            <label for="newTaskSubject" class="col-4">Subject:</label>
+                            <input id="newTaskSubject" class="col-8" name="newTaskSubject"
+                                [(ngModel)]="emptyTaskValues.subject" required>
+
+                            <label for="newTaskAssignedTo" class="col-4">Assigned to:</label>
+                            <input id="newTaskAssignedTo" class="col-8" name="newTaskAssignedTo"
+                                [(ngModel)]="emptyTaskValues.assignedTo" required>
+
+                            <label for="newTaskTimeEstimation" class="col-4">Time Estimation:</label>
+                            <input type="number" id="newTaskTimeEstimation" class="col-8" name="newTaskTimeEstimation"
+                                [(ngModel)]="emptyTaskValues.timeEstimation" required>
+
+                            <label for="newTaskDuration" class="col-4">Duration:</label>
+                            <input id="newTaskDuration" class="col-8" name="newTaskDuration"
+                                [(ngModel)]="emptyTaskValues.duration">
+                        </strong></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- Botones para guardar cambios y cancelar edición -->
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                data-bs-target="#saveModal" (click)="saveChanges()">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="cancelEdit()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="initialModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img alt=check src="../img/verify.gif">
+                <h1 class="modal-title" id="editModalLabel">Task initialized</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="initialModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img alt=check src="../img/verify.gif">
+                <h1 class="modal-title" id="editModalLabel">Task initialized</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img alt=check src="../img/verify.gif">
+                <h1 class="modal-title" id="editModalLabel">Task Created</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img alt=check src="../img/verify.gif">
+                <h1 class="modal-title" id="editModalLabel">Task edited</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img alt=check src="../img/verify.gif">
+                <h1 class="modal-title" id="editModalLabel">Task deleted</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #noTasks>All clear! Any tasks to-Do!</ng-template>

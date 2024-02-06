@@ -1,0 +1,32 @@
+span {
+    font-weight: bold;
+}
+
+.centerTask {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    padding: 0.5rem;
+}
+
+.tarjeta {
+    /* Otras propiedades de estilo para tu tarjeta */
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.tarjeta:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.tarjeta.selected {
+    background-color: rgba(0, 0, 255, 0.1);
+    /* Fondo azul con opacidad del 10% */
+}
+
+img{
+    width: 7rem;
+}
